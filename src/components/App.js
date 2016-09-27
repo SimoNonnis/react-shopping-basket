@@ -46,7 +46,7 @@ class App extends Component {
               />
             ))}
           </div>
-          <ShoppingBasket basket={this.state.basket}/>
+          <ShoppingBasket basket={this.state.basket} />
         </div>
       </div>
     )
