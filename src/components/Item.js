@@ -5,7 +5,7 @@ import styles from './item.css';
 const Item = ({name, price}) => {
   return (
     <div className={styles.itemContainer}>
-      <h2>{name}
+      <h2 className={styles.productName}>{name}
         <span className={styles.price}>{price}ct each</span>
       </h2>
       <input
