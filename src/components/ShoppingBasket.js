@@ -12,13 +12,9 @@ const ShoppingBasket = ({basket}) => {
     </div>
   );
 
-  function randomKey()  {
-    return new Date().getTime();
-  }
-
-  const itemsInBasket = basket.map((item) => (
+  const itemsInBasket = basket.map((item, i) => (
     <ItemInBasket
-      key={randomKey()}
+      key={Math.random() + i}
       name={item.name}
       price={item.price}
     />
