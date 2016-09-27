@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
 import Item from './Item';
+import ShoppingBasket from './ShoppingBasket';
 
 import styles from './app.css';
 
@@ -9,26 +10,43 @@ class App extends Component {
     super();
     this.state = {
       itemsList: [
-        { name: 'Apples', price: 25 },
-        { name: 'Oranges', price: 30 },
-        { name: 'Bananas', price: 15 },
-        { name: 'Papayas', price: 50 }
-      ]
+        { name: 'Apples',  price: 25, id: 1, promo: false },
+        { name: 'Oranges', price: 30, id: 2, promo: false },
+        { name: 'Bananas', price: 15, id: 3, promo: false },
+        { name: 'Papayas', price: 50, id: 4, promo: true  }
+      ],
+      basket: []
     }
+    this.addToBasket = this.addToBasket.bind(this);
+  }
+
+  addToBasket (e) {
+    this.state.itemsList.map((item) => {
+      if (e.target.id == item.id) {
+        this.setState({
+          basket: this.state.basket.concat(item)
+        })
+      }
+    })
   }
 
   render () {
     return (
       <div className={styles.container}>
-        <h1 className={styles.title}>Let's Shop!</h1>
-        <div className={styles.itemsList}>
-          {this.state.itemsList.map(({name, price}, i) => (
-            <Item
-              key={i+1}
-              name={name}
-              price={price}
-            />
-          ))}
+        <h1 className={styles.title}>Let's do some shopping!</h1>
+        <div className={styles.wrapper}>
+          <div className={styles.itemsList}>
+            {this.state.itemsList.map(({name, price, id}) => (
+              <Item
+                key={id}
+                id={id}
+                name={name}
+                price={price}
+                addToBasket={this.addToBasket}
+              />
+            ))}
+          </div>
+          <ShoppingBasket basket={this.state.basket}/>
         </div>
       </div>
     )
