@@ -25,13 +25,16 @@ const ShoppingBasket = ({basket}) => {
       {itemsInBasket}
       <div className={styles.totalBox}>
         <span>Total:</span>
-        <span>{total()}ct</span>
+        <span>{getTotal()}ct</span>
       </div>
     </div>
   );
 
-  function total() {
-    return 1;
+  function getTotal() {
+    return basket.reduce((tot, item) => {
+      let finalTotal = tot + item.price;
+      return finalTotal;
+    }, 0)
   }
 
   return (
