@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 
 import styles from './item.css';
 
-const Item = ({name, price, id, addToBasket}) => {
+const Item = ({ name, price, id, addToBasket }) => {
   return (
     <div className={styles.itemContainer}>
       <h2 className={styles.productName}>{name}

@@ -4,7 +4,7 @@ import ItemInBasket from './ItemInBasket';
 
 import styles from './shoppingBasket.css';
 
-const ShoppingBasket = ({basket}) => {
+const ShoppingBasket = ({ basket, itemsList }) => {
   const msg = (
     <div>
       <h2>Shopping Basket is empty</h2>
@@ -12,40 +12,60 @@ const ShoppingBasket = ({basket}) => {
     </div>
   );
 
-  const itemsInBasket = basket.map((item, i) => (
-    <ItemInBasket
-      key={Math.random() + i}
-      name={item.name}
-      price={item.price}
-    />
-  ));
+  const itemsInBasket = Object.keys(basket);
+
+  const renderOrder = function (key) {
+    const fruit = itemsList[key-1];
+    const count = basket[key];
+
+    return (
+      <ItemInBasket
+        key={key}
+        name={fruit.name}
+        count={count}
+        price={fruit.price}
+      />
+    )
+  };
+
+  const total = itemsInBasket.reduce((prevTotal, key) => {
+    const fruit = itemsList[key-1];
+    const count = basket[key];
+
+    return prevTotal + (count * fruit.price || 0)
+  }, 0)
+
+
+
+
+
 
   const shoppingBasket = (
     <div>
-      {itemsInBasket}
+      {itemsInBasket.map(renderOrder)}
       <div className={styles.totalBox}>
         <span>Total:</span>
-        <span>{getTotal()}ct</span>
+        <span>{total}ct</span>
       </div>
     </div>
   );
 
-  function getTotal() {
-    return basket.reduce((tot, item) => {
-      let finalTotal = tot + item.price;
-      return finalTotal;
-    }, 0)
-  }
+
 
   return (
     <div className={styles.container}>
-    {basket.length ? shoppingBasket : msg}
+      {itemsInBasket.length ? shoppingBasket : msg}
     </div>
   )
 };
 
+
+
+
+
 ShoppingBasket.propTypes = {
-  basket: PropTypes.array
+  basket: PropTypes.object,
+  itemsList: PropTypes.array
 }
 
 export default ShoppingBasket;

@@ -15,7 +15,7 @@ class App extends Component {
         { name: 'Bananas', price: 15, id: 3, promo: false },
         { name: 'Papayas', price: 50, id: 4, promo: true  }
       ],
-      basket: []
+      basket: {}
     }
     this.addToBasket = this.addToBasket.bind(this);
   }
@@ -23,8 +23,11 @@ class App extends Component {
   addToBasket (e) {
     this.state.itemsList.map((item) => {
       if (e.target.id == item.id) {
+        const { basket } = this.state;
+        basket[item.id] = basket[item.id] + 1 || 1;
+
         this.setState({
-          basket: this.state.basket.concat(item)
+          basket: basket
         })
       }
     })
@@ -46,7 +49,10 @@ class App extends Component {
               />
             ))}
           </div>
-          <ShoppingBasket basket={this.state.basket} />
+          <ShoppingBasket
+            basket={this.state.basket}
+            itemsList={this.state.itemsList}
+          />
         </div>
       </div>
     )
